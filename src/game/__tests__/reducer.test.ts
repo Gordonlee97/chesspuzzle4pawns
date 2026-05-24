@@ -3,10 +3,6 @@ import { gameReducer } from '../reducer';
 import { makeInitialGameState } from '../initialState';
 import type { GameState } from '../types';
 
-function stateAfter(state: GameState, ...actions: Parameters<typeof gameReducer>[1][]): GameState {
-  return actions.reduce((s, a) => gameReducer(s, a), state);
-}
-
 describe('SELECT action', () => {
   test('selecting a white piece computes legal moves', () => {
     const state = makeInitialGameState();
