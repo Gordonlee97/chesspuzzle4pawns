@@ -146,4 +146,18 @@ describe('useDrag', () => {
 
     expect(result.current.dragState.mousePos).toBeNull();
   });
+
+  test('window listeners are removed when hook unmounts during drag', () => {
+    const { result, unmount } = renderHook(() => useDrag([], dispatch));
+
+    act(() => {
+      result.current.startDrag(3, 0, { clientX: 100, clientY: 200, preventDefault: vi.fn() });
+    });
+
+    const removeSpy = vi.spyOn(window, 'removeEventListener');
+    unmount();
+
+    expect(removeSpy).toHaveBeenCalledWith('mousemove', expect.any(Function));
+    expect(removeSpy).toHaveBeenCalledWith('mouseup', expect.any(Function));
+  });
 });
