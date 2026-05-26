@@ -13,7 +13,7 @@ export type DragState = {
 
 type DragEvent = { clientX: number; clientY: number; preventDefault(): void };
 
-export function useDrag(legalMoves: Position[], dispatch: Dispatch<Action>) {
+export function useDrag(legalMoves: Position[], dispatch: Dispatch<Action>, selected: Position | null) {
   const [dragState, setDragState] = useState<DragState>({
     dragging: false,
     origin: null,
@@ -23,6 +23,9 @@ export function useDrag(legalMoves: Position[], dispatch: Dispatch<Action>) {
   // Ref keeps the mouseup closure from capturing a stale legalMoves snapshot.
   const legalMovesRef = useRef(legalMoves);
   legalMovesRef.current = legalMoves;
+
+  const selectedRef = useRef(selected);
+  selectedRef.current = selected;
 
   // Stored so the unmount cleanup effect can remove them if a drag is in progress.
   const moveListenerRef = useRef<((ev: MouseEvent) => void) | null>(null);
@@ -39,7 +42,11 @@ export function useDrag(legalMoves: Position[], dispatch: Dispatch<Action>) {
     (row: number, col: number, e: DragEvent) => {
       e.preventDefault();
       setDragState({ dragging: true, origin: { row, col }, mousePos: { x: e.clientX, y: e.clientY } });
-      dispatch({ type: 'SELECT', row, col });
+      // Skip SELECT if this piece is already selected — legalMoves are current and
+      // dispatching SELECT again would toggle it off under the new reducer logic.
+      if (!(selectedRef.current?.row === row && selectedRef.current?.col === col)) {
+        dispatch({ type: 'SELECT', row, col });
+      }
 
       const onMouseMove = (ev: MouseEvent) => {
         setDragState(prev => ({ ...prev, mousePos: { x: ev.clientX, y: ev.clientY } }));

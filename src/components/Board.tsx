@@ -10,7 +10,7 @@ type BoardProps = {
 };
 
 export function Board({ state, dispatch }: BoardProps) {
-  const { dragState, startDrag } = useDrag(state.legalMoves, dispatch);
+  const { dragState, startDrag } = useDrag(state.legalMoves, dispatch, state.selected);
 
   const floatingPiece: PieceType | null =
     dragState.dragging && dragState.origin

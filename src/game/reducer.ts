@@ -17,6 +17,9 @@ export function gameReducer(state: GameState, action: Action): GameState {
   switch (action.type) {
     case 'SELECT': {
       const { row, col } = action;
+      if (state.selected?.row === row && state.selected?.col === col) {
+        return { ...state, selected: null, legalMoves: [] };
+      }
       const cell = state.board[row][col];
       if (cell.piece?.startsWith('w')) {
         return {
