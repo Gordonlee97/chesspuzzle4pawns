@@ -155,7 +155,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  min-width: 100px;
+  width: 140px;
+  flex-shrink: 0;
 }
 
 .move-counter {

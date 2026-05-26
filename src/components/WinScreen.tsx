@@ -17,7 +17,7 @@ export function WinScreen({ moveCount, onReset, onClose }: WinScreenProps) {
           Play Again
         </button>
         <button className="btn btn--close-win" onClick={onClose}>
-          Review position
+          Close
         </button>
       </div>
     </div>
