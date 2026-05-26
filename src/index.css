@@ -101,13 +101,8 @@ body {
 .square--dark  { background: var(--color-dark); }
 .square--wall  { background: var(--color-wall); cursor: default; }
 
-.square--selected {
-  background: var(--color-selected) !important;
-  filter: brightness(1.1);
-}
-
-.square--selected.square--light { background: color-mix(in srgb, var(--color-light) 60%, #ffdc32 40%) !important; }
-.square--selected.square--dark  { background: color-mix(in srgb, var(--color-dark) 60%, #ffdc32 40%) !important; }
+.square--selected.square--light { background: #cdd26f !important; }
+.square--selected.square--dark  { background: #aaa23a !important; }
 
 .square:not(.square--wall):hover {
   filter: brightness(1.08);
