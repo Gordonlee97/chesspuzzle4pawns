@@ -1,4 +1,3 @@
-// src/components/Piece.tsx
 import type { MouseEvent } from 'react';
 import type { PieceType } from '../game/types';
 import wNSrc from '../pieces/wN.svg';

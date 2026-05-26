@@ -1,4 +1,3 @@
-// src/components/Board.tsx
 import type { Dispatch, MouseEvent } from 'react';
 import type { Action, GameState, PieceType } from '../game/types';
 import { Square } from './Square';
@@ -13,7 +12,7 @@ type BoardProps = {
 export function Board({ state, dispatch }: BoardProps) {
   const { dragState, startDrag } = useDrag(state.legalMoves, dispatch);
 
-  const floatingPiece =
+  const floatingPiece: PieceType | null =
     dragState.dragging && dragState.origin
       ? state.board[dragState.origin.row][dragState.origin.col].piece
       : null;
@@ -43,10 +42,10 @@ export function Board({ state, dispatch }: BoardProps) {
       </div>
       {dragState.dragging && dragState.mousePos && floatingPiece && (
         <img
-          src={PIECE_SRC[floatingPiece as PieceType]}
+          src={PIECE_SRC[floatingPiece]}
           alt="dragging"
           className="piece piece--floating"
-          style={{ left: dragState.mousePos.x, top: dragState.mousePos.y }}
+          style={{ left: `${dragState.mousePos.x}px`, top: `${dragState.mousePos.y}px` }}
           draggable={false}
         />
       )}

@@ -1,4 +1,3 @@
-// src/components/Square.tsx
 import type { MouseEvent } from 'react';
 import type { Action, Cell } from '../game/types';
 import type { Dispatch } from 'react';
@@ -44,7 +43,7 @@ export function Square({
         <Piece
           type={cell.piece}
           onMouseDown={cell.piece.startsWith('w') ? onPieceMouseDown : undefined}
-          ghost={isDragOrigin}
+          ghost={cell.piece.startsWith('w') && isDragOrigin}
         />
       )}
       {isLegalMove && !isCapture && <div className="move-dot" />}
