@@ -13,14 +13,21 @@ export default function App() {
     const v = localStorage.getItem(STORAGE_KEY);
     return v !== null ? parseInt(v, 10) : null;
   });
+  const [winScreenOpen, setWinScreenOpen] = useState(false);
 
   useEffect(() => {
     if (!state.won) return;
+    setWinScreenOpen(true);
     if (bestScore === null || state.moveCount < bestScore) {
       setBestScore(state.moveCount);
       localStorage.setItem(STORAGE_KEY, String(state.moveCount));
     }
   }, [state.won]);
+
+  const handleReset = () => {
+    dispatch({ type: 'RESET' });
+    setWinScreenOpen(false);
+  };
 
   return (
     <div className="app">
@@ -31,13 +38,20 @@ export default function App() {
         </header>
         <div className="game-body">
           <Board state={state} dispatch={dispatch} />
-          <SidePanel state={state} dispatch={dispatch} bestScore={bestScore} />
+          <SidePanel
+            state={state}
+            dispatch={dispatch}
+            bestScore={bestScore}
+            showPlayAgain={state.won && !winScreenOpen}
+            onPlayAgain={handleReset}
+          />
         </div>
       </div>
-      {state.won && (
+      {winScreenOpen && (
         <WinScreen
           moveCount={state.moveCount}
-          onReset={() => dispatch({ type: 'RESET' })}
+          onReset={handleReset}
+          onClose={() => setWinScreenOpen(false)}
         />
       )}
     </div>

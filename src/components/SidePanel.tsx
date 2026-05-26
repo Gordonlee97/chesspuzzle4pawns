@@ -5,9 +5,11 @@ type SidePanelProps = {
   state: GameState;
   dispatch: Dispatch<Action>;
   bestScore: number | null;
+  showPlayAgain: boolean;
+  onPlayAgain: () => void;
 };
 
-export function SidePanel({ state, dispatch, bestScore }: SidePanelProps) {
+export function SidePanel({ state, dispatch, bestScore, showPlayAgain, onPlayAgain }: SidePanelProps) {
   const canUndo = state.history.length > 0;
 
   return (
@@ -16,19 +18,27 @@ export function SidePanel({ state, dispatch, bestScore }: SidePanelProps) {
         <span className="move-counter__label">MOVES</span>
         <span className="move-counter__value">{state.moveCount}</span>
       </div>
-      <button
-        className="btn btn--undo"
-        onClick={() => dispatch({ type: 'UNDO' })}
-        disabled={!canUndo}
-      >
-        ↩ Undo
-      </button>
-      <button
-        className="btn btn--reset"
-        onClick={() => dispatch({ type: 'RESET' })}
-      >
-        ↺ Reset
-      </button>
+      {showPlayAgain ? (
+        <button className="btn" onClick={onPlayAgain}>
+          ↺ Play Again
+        </button>
+      ) : (
+        <>
+          <button
+            className="btn btn--undo"
+            onClick={() => dispatch({ type: 'UNDO' })}
+            disabled={!canUndo}
+          >
+            ↩ Undo
+          </button>
+          <button
+            className="btn btn--reset"
+            onClick={() => dispatch({ type: 'RESET' })}
+          >
+            ↺ Reset
+          </button>
+        </>
+      )}
       <p className="best-score">
         Best: {bestScore !== null ? bestScore : '—'}
       </p>

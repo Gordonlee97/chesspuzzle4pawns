@@ -1,9 +1,10 @@
 type WinScreenProps = {
   moveCount: number;
   onReset: () => void;
+  onClose: () => void;
 };
 
-export function WinScreen({ moveCount, onReset }: WinScreenProps) {
+export function WinScreen({ moveCount, onReset, onClose }: WinScreenProps) {
   return (
     <div className="win-overlay">
       <div className="win-card">
@@ -14,6 +15,9 @@ export function WinScreen({ moveCount, onReset }: WinScreenProps) {
         </p>
         <button className="btn btn--play-again" onClick={onReset}>
           Play Again
+        </button>
+        <button className="btn btn--close-win" onClick={onClose}>
+          Review position
         </button>
       </div>
     </div>
