@@ -28,7 +28,7 @@ export function Board({ state, dispatch }: BoardProps) {
               row={r}
               col={c}
               isSelected={state.selected?.row === r && state.selected?.col === c}
-              isLegalMove={state.legalMoves.some(m => m.row === r && m.col === c)}
+              isLegalMove={!dragState.dragging && state.legalMoves.some(m => m.row === r && m.col === c)}
               dispatch={dispatch}
               onPieceMouseDown={(e: MouseEvent<HTMLImageElement>) => startDrag(r, c, e)}
               isDragOrigin={

@@ -59,7 +59,11 @@ export function useDrag(legalMoves: Position[], dispatch: Dispatch<Action>) {
           // -1 will never match a legal move, so invalid attributes fail silently.
           if (legalMovesRef.current.some(m => m.row === toRow && m.col === toCol)) {
             dispatch({ type: 'MOVE', row: toRow, col: toCol });
+          } else {
+            dispatch({ type: 'DESELECT' });
           }
+        } else {
+          dispatch({ type: 'DESELECT' });
         }
 
         setDragState({ dragging: false, origin: null, mousePos: null });

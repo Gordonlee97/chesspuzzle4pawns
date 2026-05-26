@@ -21,5 +21,6 @@ export type GameState = {
 export type Action =
   | { type: 'SELECT'; row: number; col: number }
   | { type: 'MOVE'; row: number; col: number }
+  | { type: 'DESELECT' }
   | { type: 'UNDO' }
   | { type: 'RESET' };

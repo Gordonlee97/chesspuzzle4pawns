@@ -58,6 +58,9 @@ export function gameReducer(state: GameState, action: Action): GameState {
       };
     }
 
+    case 'DESELECT':
+      return { ...state, selected: null, legalMoves: [] };
+
     case 'RESET':
       return makeInitialGameState();
   }
