@@ -183,6 +183,15 @@ body {
   line-height: 1;
 }
 
+.best-score {
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  opacity: 0.5;
+  margin-top: 4px;
+}
+
 /* Buttons */
 .btn {
   background: var(--color-panel-bg);

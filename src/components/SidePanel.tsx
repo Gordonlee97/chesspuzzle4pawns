@@ -4,9 +4,10 @@ import type { Action, GameState } from '../game/types';
 type SidePanelProps = {
   state: GameState;
   dispatch: Dispatch<Action>;
+  bestScore: number | null;
 };
 
-export function SidePanel({ state, dispatch }: SidePanelProps) {
+export function SidePanel({ state, dispatch, bestScore }: SidePanelProps) {
   const canUndo = state.history.length > 0;
 
   return (
@@ -28,6 +29,9 @@ export function SidePanel({ state, dispatch }: SidePanelProps) {
       >
         ↺ Reset
       </button>
+      <p className="best-score">
+        Best: {bestScore !== null ? bestScore : '—'}
+      </p>
     </div>
   );
 }

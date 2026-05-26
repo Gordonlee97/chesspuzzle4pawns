@@ -1,12 +1,26 @@
-import { useReducer } from 'react';
+import { useReducer, useState, useEffect } from 'react';
 import { gameReducer } from './game/reducer';
 import { makeInitialGameState } from './game/initialState';
 import { Board } from './components/Board';
 import { SidePanel } from './components/SidePanel';
 import { WinScreen } from './components/WinScreen';
 
+const STORAGE_KEY = 'fourPawns_bestScore';
+
 export default function App() {
   const [state, dispatch] = useReducer(gameReducer, undefined, makeInitialGameState);
+  const [bestScore, setBestScore] = useState<number | null>(() => {
+    const v = localStorage.getItem(STORAGE_KEY);
+    return v !== null ? parseInt(v, 10) : null;
+  });
+
+  useEffect(() => {
+    if (!state.won) return;
+    if (bestScore === null || state.moveCount < bestScore) {
+      setBestScore(state.moveCount);
+      localStorage.setItem(STORAGE_KEY, String(state.moveCount));
+    }
+  }, [state.won]);
 
   return (
     <div className="app">
@@ -17,7 +31,7 @@ export default function App() {
         </header>
         <div className="game-body">
           <Board state={state} dispatch={dispatch} />
-          <SidePanel state={state} dispatch={dispatch} />
+          <SidePanel state={state} dispatch={dispatch} bestScore={bestScore} />
         </div>
       </div>
       {state.won && (
