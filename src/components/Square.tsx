@@ -1,3 +1,5 @@
+// src/components/Square.tsx
+import type { MouseEvent } from 'react';
 import type { Action, Cell } from '../game/types';
 import type { Dispatch } from 'react';
 import { Piece } from './Piece';
@@ -9,9 +11,13 @@ type SquareProps = {
   isSelected: boolean;
   isLegalMove: boolean;
   dispatch: Dispatch<Action>;
+  onPieceMouseDown?: (e: MouseEvent<HTMLImageElement>) => void;
+  isDragOrigin?: boolean;
 };
 
-export function Square({ cell, row, col, isSelected, isLegalMove, dispatch }: SquareProps) {
+export function Square({
+  cell, row, col, isSelected, isLegalMove, dispatch, onPieceMouseDown, isDragOrigin,
+}: SquareProps) {
   const isLight = (row + col) % 2 === 0;
 
   let squareClass = 'square';
@@ -33,8 +39,14 @@ export function Square({ cell, row, col, isSelected, isLegalMove, dispatch }: Sq
   const isCapture = isLegalMove && cell.piece === 'bP';
 
   return (
-    <div className={squareClass} onClick={handleClick}>
-      {cell.piece && <Piece type={cell.piece} />}
+    <div className={squareClass} onClick={handleClick} data-row={row} data-col={col}>
+      {cell.piece && (
+        <Piece
+          type={cell.piece}
+          onMouseDown={cell.piece.startsWith('w') ? onPieceMouseDown : undefined}
+          ghost={isDragOrigin}
+        />
+      )}
       {isLegalMove && !isCapture && <div className="move-dot" />}
       {isLegalMove && isCapture && <div className="move-ring" />}
     </div>

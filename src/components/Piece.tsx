@@ -1,3 +1,5 @@
+// src/components/Piece.tsx
+import type { MouseEvent } from 'react';
 import type { PieceType } from '../game/types';
 import wNSrc from '../pieces/wN.svg';
 import wRSrc from '../pieces/wR.svg';
@@ -5,7 +7,7 @@ import wBSrc from '../pieces/wB.svg';
 import wPSrc from '../pieces/wP.svg';
 import bPSrc from '../pieces/bP.svg';
 
-const PIECE_SRC: Record<PieceType, string> = {
+export const PIECE_SRC: Record<PieceType, string> = {
   wN: wNSrc,
   wR: wRSrc,
   wB: wBSrc,
@@ -15,15 +17,18 @@ const PIECE_SRC: Record<PieceType, string> = {
 
 type PieceProps = {
   type: PieceType;
+  onMouseDown?: (e: MouseEvent<HTMLImageElement>) => void;
+  ghost?: boolean;
 };
 
-export function Piece({ type }: PieceProps) {
+export function Piece({ type, onMouseDown, ghost }: PieceProps) {
   return (
     <img
       src={PIECE_SRC[type]}
       alt={type}
-      className="piece"
+      className={ghost ? 'piece piece--ghost' : 'piece'}
       draggable={false}
+      onMouseDown={onMouseDown}
     />
   );
 }

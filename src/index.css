@@ -119,7 +119,21 @@ body {
   height: 85%;
   object-fit: contain;
   user-select: none;
+}
+
+.piece--ghost {
+  opacity: 0.3;
+}
+
+.piece--floating {
+  position: fixed;
+  width: var(--sq-size);
+  height: var(--sq-size);
+  object-fit: contain;
+  transform: translate(-50%, -50%);
   pointer-events: none;
+  z-index: 200;
+  user-select: none;
 }
 
 /* Move indicators */
